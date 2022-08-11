@@ -1,12 +1,63 @@
 {
+  "name": "mtg-guide",
+  "description": "Provides gameplay, Card collections, and store locator for Magic the Gathering",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarZmu/mtgGuide.git"
+  },
+  "keywords": [
+    "mtg",
+    "cards",
+    "playing"
+  ],
+  "author": "marzmu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarZmu/mtgGuide/issues"
+  },
+  "homepage": "https://github.com/MarZmu/mtgGuide#readme",
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/plugin-transform-runtime": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@webpack-cli/generators": "^2.5.0",
+    "babel-loader": "^8.2.5",
+    "compression-webpack-plugin": "^10.0.0",
+    "css-loader": "^6.7.1",
     "eslint": "^8.21.0",
     "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-react": "^7.30.1"
+    "eslint-plugin-react": "^7.30.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "source-map-loader": "^4.0.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
+    "@babel/runtime": "^7.18.9",
     "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "react": "^18.2.0"
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "pokemontcgsdk": "^2.0.0",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sequelize": "^6.21.3"
   }
 }
