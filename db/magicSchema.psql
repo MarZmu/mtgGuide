@@ -1,0 +1,44 @@
+
+CREATE TABLE IF NOT EXISTS Users (
+  id            SERIAL PRIMARY KEY,
+  -- customer_id   SMALLINT NOT NULL UNIQUE references client (id),
+  username      TEXT CHECK NOT NUll ( CHAR_LENGTH (username) > 8 AND CHAR_LENGTH (username) < 20),
+  password      TEXT CHECK NOT NULL ( CHAR_LENGTH (password) > 8),
+);
+
+CREATE TABLE IF NOT EXISTS Deck  (
+  id            SERIAL PRIMARY KEY,
+  type          {type: Sequelize.String, allowNull: false, unique: false},
+  colors        {}
+  manaCost      {type: Sequelize.String, allowNull: false, unique: false},
+  toughness
+  rarity
+  imageUrl:     {isUrl: true,
+)
+
+
+
+
+
+
+
+
+
+
+-- const User = sequelize.define('User', {
+--   id: {type: Sequelize.INTEGER, unique: true, autoIncrement: true, primaryKey: true},
+--   customer_id: {type: Sequelize.INTEGER, unique: true, allowNull: false, foriegnKey: true},
+--   username: {type: Sequelize.String, allowNull: false, unique: true},
+--   passWord: {type: Sequelize.String, allowNull: false, minLength: 10}
+-- });
+
+-- const Cards = sequelize.define('Cards', {
+--   id: {type: Sequelize.INTEGER, unique: true, autoIncrement: true, primaryKey: true},
+--   name: {type: Sequelize.String, allowNull: false, unique: true},
+--   type: {type: Sequelize.String, allowNull: false, unique: false},
+--   colors: {}
+--   manaCost: {type: Sequelize.String, allowNull: false, unique: false},
+--   toughness:
+--   rarity:
+--   imageUrl: {isUrl: true,
+-- });

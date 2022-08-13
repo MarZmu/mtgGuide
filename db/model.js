@@ -9,14 +9,17 @@ const User = sequelize.define('User', {
   passWord: {type: Sequelize.String, allowNull: false, minLength: 10}
 });
 
+User.hasM
+
 const Cards = sequelize.define('Cards', {
   id: {type: Sequelize.INTEGER, unique: true, autoIncrement: true, primaryKey: true},
-  name:
-  type:
-  manaCost:
+  name: {type: Sequelize.String, allowNull: false, unique: true},
+  type: {type: Sequelize.String, allowNull: false, unique: false},
+  colors: {}
+  manaCost: {type: Sequelize.String, allowNull: false, unique: false},
   toughness:
   rarity:
-  imageUrl:
+  imageUrl: {isUrl: true,
 });
 
 User.sync();
