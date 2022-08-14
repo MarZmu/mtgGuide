@@ -1,8 +1,10 @@
+
+
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('magicDB', 'root');
+const sequelize = new Sequelize('magicDB', 'root'); //db and user, no password
 
 
-const User = sequelize.define('User', {
+const Users = sequelize.define('Users', {
   id: {type: Sequelize.INTEGER, unique: true, autoIncrement: true, primaryKey: true},
   customer_id: {type: Sequelize.INTEGER, unique: true, allowNull: false, foriegnKey: true},
   username: {type: Sequelize.String, allowNull: false, unique: true},
@@ -19,5 +21,8 @@ const Cards = sequelize.define('Cards', {
   imageUrl:
 });
 
-User.sync();
+Users.sync();
+Cards.sync();
 
+module.exports.Users = Users;
+module.exports.Cards = Cards;
