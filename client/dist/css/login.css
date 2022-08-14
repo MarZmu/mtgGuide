@@ -1,0 +1,37 @@
+form {
+  grid-column: 3;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  align-self: center;
+  align-items: center;
+  justify-items: stretch;
+ }
+
+ .login-label {
+   align-self: center;
+   grid-column: 2;
+   font-weight: 900;
+   text-align: center;
+ }
+
+ #user, #pass {
+   background-color: rgb(46, 44, 44);
+   color:rgb(223, 228, 232);
+ }
+ #user {
+   grid-row: 1;
+ }
+ #pass {
+   grid-row: 2;
+ }
+ #login {
+   grid-row: 3;
+ }
+ #create {
+   grid-row: 4;
+ }
+ .login-button {
+   grid-column: 1 / span 3;
+ }

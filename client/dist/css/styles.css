@@ -35,6 +35,12 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 
+/* -------------------- */
+
+h1 {
+  color: blue;
+}
+
 #header {
   height: 800px;
   background-image: url('./../../assets/pictures/Background.png');
@@ -52,7 +58,7 @@ p, h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: fit-content;
   grid-column: 1 / span 5;
-  grid-row: 3;
+  grid-row: 2;
 }
 
 #subtitle {
@@ -63,50 +69,10 @@ p, h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
-form {
- grid-column: 3;
- grid-row: 4;
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- grid-template-rows: repeat(4, 1fr);
- align-self: center;
- align-items: center;
- justify-items: stretch;
-}
-
-.login-label {
-  align-self: center;
-  grid-column: 2;
-  font-weight: 900;
-  text-align: center;
-}
-input {
-  background-color: rgb(46, 44, 44);
-  color:rgb(223, 228, 232);
-}
-#user {
-  grid-row: 1;
-}
-#pass {
-  grid-row: 2;
-}
-button {
-  grid-column: 1 / span 3;
-}
-#login {
-  grid-row: 3;
-}
-#create {
-  grid-row: 4;
-}
-
-h1 {
-  color: blue;
-}
 
 #find-container {
   grid-column: 2 /span 3;
-  grid-row: 4;
+  grid-row: 3;
 }
 
 
@@ -116,17 +82,74 @@ h1 {
   grid-template-rows: min-content minmax(50px, 80px) min-content;
 }
 
-#search-bar {
+#name {
+  background-color: rgb(46, 44, 44);
+  color:rgb(223, 228, 232);
   grid-row: 1;
   grid-column: 1 /sp;
   height: 100%;
   font-size: 1.6em;
+  border-radius: 5px;
 }
 
 .find-select {
   grid-row: 2;
   margin: 10px;
   height: 50%;
+  display: grid;
   text-align: center;
+  background-color: #000000ba;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
+select {
+  border-radius: 3px;
+  background-color: rgb(255 251 246);
+}
+
+.card {
+  display: inline-flex;
+  position: relative
+}
+
+#cd1 {
+  z-index: 1;
+}
+#cd2 {
+  z-index: 2;
+}
+#cd3 {
+  z-index: 3;
+}
+#cd4 {
+  z-index: 4;
+  left: 60px;
+  top: 60px;
+}
+#cd5 {
+  z-index: 5;
+  left: 60px;
+  top: 60px;
+}
+#cd6 {
+  z-index: 6;
+  left: 60px;
+  top: 60px;
+}
+#cd7 {
+  z-index: 7;
+  left: 120px;
+  bottom: 120px;
+}
+#cd8 {
+  z-index:8;
+  left: 120px;
+  bottom: 120px
+}
+#cd9 {
+  z-index: 9;
+  left: 120px;
+  bottom: 120px
+}
+
 
