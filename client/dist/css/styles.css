@@ -8,6 +8,7 @@
 * {
   margin: 0;
   font-family: 'Cinzel', serif;
+  width: 100%;
 }
 html, body {
   height: 100%;
@@ -107,49 +108,68 @@ select {
   background-color: rgb(255 251 246);
 }
 
+#card-container {
+  display: inline-flex;
+}
+
 .card {
   display: inline-flex;
   position: relative
 }
 
-#cd1 {
+.card:hover {
+  z-index: 20 !important;
+  position: absolute;
+  left: 40%;
+  height: 40%;
+  width: 20%;
+}
+
+#cd0 {
   z-index: 1;
+  right: 220px;
+  border: 2px solid aliceblue;
+}
+#cd1 {
+  z-index: 2;
+  right: 320px;
+  border: 2px solid aliceblue;
 }
 #cd2 {
-  z-index: 2;
+  z-index: 3;
+  right: 380px;
+  border: 2px solid aliceblue;
+    
 }
 #cd3 {
-  z-index: 3;
+  z-index: 4;
+  right: 440px;
+  border: 2px solid aliceblue;
 }
 #cd4 {
-  z-index: 4;
-  left: 60px;
-  top: 60px;
+  z-index: 5;
+  right: 500px;
+  border: 2px solid aliceblue;
 }
 #cd5 {
-  z-index: 5;
-  left: 60px;
-  top: 60px;
+  z-index: 6;
+  right: 560px;
+  border: 2px solid aliceblue;
 }
 #cd6 {
-  z-index: 6;
-  left: 60px;
-  top: 60px;
+  z-index: 7;
+  right: 600px;
+  border: 2px solid aliceblue;
 }
 #cd7 {
-  z-index: 7;
-  left: 120px;
-  bottom: 120px;
+  z-index:8;
+  right: 660px;
+  border: 2px solid aliceblue;
 }
 #cd8 {
-  z-index:8;
-  left: 120px;
-  bottom: 120px
-}
-#cd9 {
   z-index: 9;
-  left: 120px;
-  bottom: 120px
+  right: 720px;
+  border: 2px solid aliceblue;
 }
 
 

@@ -2643,6 +2643,17 @@ function Finder() {
     filters[key] = val;
   };
 
+  var addCardPrompt = function addCardPrompt(card) {
+    var addCard = confirm('Add this card to your collection?');
+
+    if (addCard) {
+      // axios.post();
+      console.log('cardSaved');
+    }
+
+    console.log(card);
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "find-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -2715,7 +2726,10 @@ function Finder() {
       className: "card",
       id: 'cd' + index,
       src: card.imageUrl,
-      alt: card.name
+      alt: card.name,
+      onClick: function onClick(e) {
+        return addCardPrompt(card);
+      }
     });
   })));
 }

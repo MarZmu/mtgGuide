@@ -38,7 +38,6 @@ function Finder() {
         console.log(data.sort((a, b) => a.cmc < b.cmc));
         setDisplay(data.slice(0, 9));
       });
-
   };
 
   const onChange = (e) => {
@@ -49,6 +48,15 @@ function Finder() {
     }
     filters[key] = val;
   };
+
+  const addCardPrompt = (card) => {
+    const addCard = confirm('Add this card to your collection?');
+    if (addCard) {
+      // axios.post();
+      console.log('cardSaved');
+    }
+    console.log(card);
+  }
 
   return (
     <div id='find-container'>
@@ -80,8 +88,9 @@ function Finder() {
           </select>
         </label>
       </div>
+      {/* should make it render a card when it is hovered rather than move the card */}
       <div id='card-container'>
-        {display.map((card, index) => (<img key={card.id} className='card' id={'cd' + index} src={card.imageUrl} alt={card.name}></img>))}
+        {display.map((card, index) => (<img key={card.id} className='card' id={'cd' + index} src={card.imageUrl} alt={card.name} onClick={(e) => addCardPrompt(card)}></img>))}
       </div>
     </div>
   );
