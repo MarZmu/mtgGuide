@@ -37,21 +37,17 @@ function Finder() {
       }
     });
     endpoint = url + endpoint.join('&');
-    console.log(endpoint);
-
     getCards(endpoint);
   };
 
   const orderCards = (cards) => {
     console.log(order, cards);
     cards = cards.sort((a, b) => (a[order] - b[order]));
-    console.log(order, cards);
     return cards;
   }
 
   //takes endpoint from buildUrl, fetches cards and puts top 9 in state
   const getCards = (endpoint) => {
-    console.log(endpoint);
     axios.get(endpoint)
       .then(({ data }) => {
         data = (order ? orderCards(data.cards) : data.cards);
@@ -75,7 +71,6 @@ function Finder() {
   return (
     <div id='find-container'>
       <div id='search-container'>
-        <button onClick={buildUrl}></button>
         <input
           id='name'
           placeholder="Search by Name"
@@ -118,6 +113,7 @@ function Finder() {
           </select>
         </label>
       </div>
+          <button onClick={buildUrl}>Search Cards</button>
       {/* should make it render a card when it is hovered rather than move the card */}
       <div id='card-container'>
         {displayCard && <img

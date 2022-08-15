@@ -2633,7 +2633,6 @@ function Finder() {
     });
 
     endpoint = url + endpoint.join('&');
-    console.log(endpoint);
     getCards(endpoint);
   };
 
@@ -2642,13 +2641,11 @@ function Finder() {
     cards = cards.sort(function (a, b) {
       return a[order] - b[order];
     });
-    console.log(order, cards);
     return cards;
   }; //takes endpoint from buildUrl, fetches cards and puts top 9 in state
 
 
   var getCards = function getCards(endpoint) {
-    console.log(endpoint);
     axios__WEBPACK_IMPORTED_MODULE_1___default().get(endpoint).then(function (_ref) {
       var data = _ref.data;
       data = order ? orderCards(data.cards) : data.cards; // data = data.cards.sort((a, b) => (a.order > b.order));
@@ -2674,9 +2671,7 @@ function Finder() {
     id: "find-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "search-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: buildUrl
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     id: "name",
     placeholder: "Search by Name",
     onChange: function onChange(e) {
@@ -2734,7 +2729,9 @@ function Finder() {
       key: 's' + index,
       value: sort
     }, sort);
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: buildUrl
+  }, "Search Cards"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "card-container"
   }, displayCard && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     id: "display-card",
