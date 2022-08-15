@@ -63,7 +63,7 @@ h1 {
 }
 
 #subtitle {
-  color-rendering: optimizeQuality;
+  /* color-rendering: optimizeQuality; */
   font-size: 3.6em;
   text-shadow: 6px 2px 5px rgba(255,255,255,0.9);
   align-self: center;
@@ -81,6 +81,9 @@ h1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: min-content minmax(50px, 80px) min-content;
+  grid-column-gap: 9px;
+  justify-content: space-evenly;
+  justify-items: center;
 }
 
 #name {
@@ -103,6 +106,7 @@ h1 {
   background-color: #000000ba;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+
 }
 select {
   text-align: center;
@@ -110,7 +114,7 @@ select {
   background-color: rgb(255 251 246);
 }
 
-button {
+#search-button {
   width: 25%;
   position: relative;
   left: 38%;
@@ -153,7 +157,7 @@ button {
   z-index: 3;
   right: 380px;
   border: 2px solid aliceblue;
-    
+
 }
 #cd3 {
   z-index: 4;

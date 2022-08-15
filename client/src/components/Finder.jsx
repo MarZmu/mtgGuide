@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
@@ -36,7 +37,8 @@ function Finder() {
         endpoint.push(`${key}=${val}`);
       }
     });
-    endpoint = url + endpoint.join('&');
+    // endpoint = url + endpoint.join('&');
+    endpoint = endpoint.join('&');
     getCards(endpoint);
   };
 
@@ -44,17 +46,19 @@ function Finder() {
     console.log(order, cards);
     cards = cards.sort((a, b) => (a[order] - b[order]));
     return cards;
-  }
+  };
 
   //takes endpoint from buildUrl, fetches cards and puts top 9 in state
   const getCards = (endpoint) => {
-    axios.get(endpoint)
-      .then(({ data }) => {
-        data = (order ? orderCards(data.cards) : data.cards);
-        // data = data.cards.sort((a, b) => (a.order > b.order));
-        // console.log(data.sort((a, b) => a.order < b.order));
-        setCards(data.slice(0, 9));
-      });
+    // axios.get(endpoint)
+    axios.get(`/Cards?${endpoint}`)
+      .then((res) => console.log(res));
+      // .then(({ data }) => {
+      //   data = (order ? orderCards(data.cards) : data.cards);
+      //   // data = data.cards.sort((a, b) => (a.order > b.order));
+      //   // console.log(data.sort((a, b) => a.order < b.order));
+      //   setCards(data.slice(0, 9));
+      // });
   };
 
 
@@ -62,11 +66,9 @@ function Finder() {
   const addCardPrompt = (card) => {
     const addCard = confirm('Add this card to your collection?');
     if (addCard) {
-      // axios.post();
-      console.log('cardSaved');
+      axios.post('/cards', {card} );
     }
-    console.log(card);
-  }
+  };
 
   return (
     <div id='find-container'>
@@ -113,13 +115,13 @@ function Finder() {
           </select>
         </label>
       </div>
-          <button onClick={buildUrl}>Search Cards</button>
-      {/* should make it render a card when it is hovered rather than move the card */}
+      <button id='search-button' onClick={buildUrl}>Search Cards</button>
       <div id='card-container'>
         {displayCard && <img
           id='display-card'
           src={displayCard.imageUrl}
           alt={displayCard.name}></img>}
+        {/* Future: render a star on cards already owned in DB  */}
         {cards.map((card, index) => (<img
           key={card.id}
           className='card'
@@ -128,7 +130,7 @@ function Finder() {
           alt={card.name}
           onClick={(e) => addCardPrompt(displayCard)}
           onMouseEnter={(e) => setDisplayCard(card)}>
-          </img>)
+        </img>)
         )}
       </div>
     </div>

@@ -5,8 +5,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-// const { Cards } = require('../db/controllers/Cards.js');
-// const { Users } = require('../db/controllers/Users.js');
+const { Cards } = require('../db/controllers/Cards.js');
+const { Users } = require('../db/controllers/Users.js');
+const db = require('../db/model.js').sequelize;
 
 const app = express();
 
@@ -16,13 +17,13 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 
-// app.get('/cards', Cards.getCards)
-// app.post('/cards', Cards.saveCard);
-// app.put('/cards', Cards.favorite);
-// app.delete('/cards', Cards.removeCard);
+app.get('/cards', Cards.getCards);
+app.post('/Cards*', Cards.saveCard);
+app.put('/cards', Cards.favorite);
+app.delete('/cards', Cards.removeCard);
 
-// app.get('/user', Users.saveUser)
-// app.post('/user', Users.saveUser);
+app.get('/user/:username/:password', Users.verifyUser);
+app.post('/user', Users.saveUser);
 
 
 
