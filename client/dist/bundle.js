@@ -2589,48 +2589,27 @@ function Finder() {
   var filters = {
     'colors': 'Select',
     'type': 'Select',
-    'mana': 'Select',
+    'cmc': 'Select',
     'name': ''
   };
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      display = _useState2[0],
-      setDisplay = _useState2[1];
+      cards = _useState2[0],
+      setCards = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState4 = _slicedToArray(_useState3, 2),
       order = _useState4[0],
-      changeOrder = _useState4[1];
+      setOrder = _useState4[1];
 
-  var url = 'https://api.magicthegathering.io/v1/cards/?'; //throttle / debounce searchbar
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState6 = _slicedToArray(_useState5, 2),
+      displayCard = _useState6[0],
+      setDisplayCard = _useState6[1];
 
-  var buildUrl = function buildUrl() {
-    //adjusts url based on filters;
-    var endpoint = [];
-
-    lodash__WEBPACK_IMPORTED_MODULE_2___default().each(filters, function (val, key) {
-      if (val !== 'Select' && val !== '') {
-        endpoint.push("".concat(key, "=").concat(val));
-      }
-    });
-
-    endpoint = url + endpoint.join('&');
-    getCards(endpoint);
-  };
-
-  var getCards = function getCards(endpoint) {
-    axios__WEBPACK_IMPORTED_MODULE_1___default().get(endpoint).then(function (_ref) {
-      var data = _ref.data;
-      data = data.cards.sort(function (a, b) {
-        return a.power > b.power;
-      });
-      console.log(data.sort(function (a, b) {
-        return a.cmc < b.cmc;
-      }));
-      setDisplay(data.slice(0, 9));
-    });
-  };
+  var url = 'https://api.magicthegathering.io/v1/cards/?contains=imageUrl&'; //throttle / debounce searchbar
+  //puts selected filters in state
 
   var _onChange = function onChange(e) {
     var key = e.target.id;
@@ -2641,7 +2620,44 @@ function Finder() {
     }
 
     filters[key] = val;
+  }; //creates endpoint from set filters
+
+
+  var buildUrl = function buildUrl() {
+    var endpoint = [];
+
+    lodash__WEBPACK_IMPORTED_MODULE_2___default().each(filters, function (val, key) {
+      if (val !== 'Select' && val !== '') {
+        endpoint.push("".concat(key, "=").concat(val));
+      }
+    });
+
+    endpoint = url + endpoint.join('&');
+    console.log(endpoint);
+    getCards(endpoint);
   };
+
+  var orderCards = function orderCards(cards) {
+    console.log(order, cards);
+    cards = cards.sort(function (a, b) {
+      return a[order] - b[order];
+    });
+    console.log(order, cards);
+    return cards;
+  }; //takes endpoint from buildUrl, fetches cards and puts top 9 in state
+
+
+  var getCards = function getCards(endpoint) {
+    console.log(endpoint);
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get(endpoint).then(function (_ref) {
+      var data = _ref.data;
+      data = order ? orderCards(data.cards) : data.cards; // data = data.cards.sort((a, b) => (a.order > b.order));
+      // console.log(data.sort((a, b) => a.order < b.order));
+
+      setCards(data.slice(0, 9));
+    });
+  }; //confirms user wants to add card to database
+
 
   var addCardPrompt = function addCardPrompt(card) {
     var addCard = confirm('Add this card to your collection?');
@@ -2669,7 +2685,7 @@ function Finder() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     className: "find-select"
   }, "Filter by Cost", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
-    id: "mana",
+    id: "cmc",
     name: "mana",
     onChange: function onChange(e) {
       return _onChange(e);
@@ -2711,7 +2727,7 @@ function Finder() {
     id: "order",
     name: "order",
     onChange: function onChange(e) {
-      return changeOrder(e.target.value);
+      return setOrder(e.target.value);
     }
   }, sorts.map(function (sort, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
@@ -2720,7 +2736,11 @@ function Finder() {
     }, sort);
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "card-container"
-  }, display.map(function (card, index) {
+  }, displayCard && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    id: "display-card",
+    src: displayCard.imageUrl,
+    alt: displayCard.name
+  }), cards.map(function (card, index) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
       key: card.id,
       className: "card",
@@ -2728,7 +2748,10 @@ function Finder() {
       src: card.imageUrl,
       alt: card.name,
       onClick: function onClick(e) {
-        return addCardPrompt(card);
+        return addCardPrompt(displayCard);
+      },
+      onMouseEnter: function onMouseEnter(e) {
+        return setDisplayCard(card);
       }
     });
   })));

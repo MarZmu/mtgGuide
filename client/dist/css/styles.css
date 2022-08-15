@@ -109,20 +109,24 @@ select {
 }
 
 #card-container {
+  margin-top:20%;
   display: inline-flex;
+  transform: translateX(-85px);
 }
 
 .card {
   display: inline-flex;
-  position: relative
+  position: relative;
+  right: 10%;
 }
 
-.card:hover {
+#display-card {
   z-index: 20 !important;
   position: absolute;
+  top: -30%;
   left: 40%;
-  height: 40%;
-  width: 20%;
+  height: 100%;
+  width: 35%;
 }
 
 #cd0 {

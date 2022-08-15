@@ -1,7 +1,17 @@
-const { Cards } = require("../model");
+const { Users } = require("../model");
 
-module.exports.saveCard = () => {
+module.exports.Users = {
 
-  Cards.save()
+  verifyUser: (req, res) => {
+
+    res.send(200);
+
+  },
+
+  saveUser: (req, res) => {
+    // Users.save();
+    res.send(201);
+
+  },
 
 }
