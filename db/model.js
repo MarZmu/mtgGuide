@@ -33,21 +33,19 @@ Users.sync().then(() => {
 
 // future: make the colors an array for when implementing icons
 const Cards = sequelize.define('Cards', {
-  id: { type: Sequelize.INTEGER, unique: true, autoIncrement: false, primaryKey: true },
+  id: { type: Sequelize.INTEGER, unique: true, autoIncrement: true, primaryKey: true },
   name: { type: Sequelize.STRING, allowNull: false, unique: true },
-  manacost: { type: Sequelize.STRING, allowNull: false, unique: false },
+  // manacost: { type: Sequelize.STRING, allowNull: false, unique: false },
   cmc: { type: Sequelize.INTEGER, allowNull: false },
-  colors: { type: Sequelize.STRING, allowNull: false },
+  // colors: { type: Sequelize.STRING, allowNull: false },
   type: { type: Sequelize.STRING, allowNull: false, unique: false },
   rarity: { type: Sequelize.STRING, allowNull: false },
   text: { type: Sequelize.STRING, allowNull: false, unique: false },
   flavor: { type: Sequelize.STRING, allowNull: false, unique: false },
-  power: { type: Sequelize.INTEGER, default: 0 },
-  toughness: { type: Sequelize.INTEGER, default: 0},
-  imageUrl: { type: Sequelize.STRING, isUrl: true, unique: true, allowNull: false }
-},
-{timestamps: false}
-);
+  // power: { type: Sequelize.INTEGER, default: 0 },
+  // toughness: { type: Sequelize.INTEGER, default: 0},
+  imageUrl: { type: Sequelize.STRING, unique: true, allowNull: false }
+});
 
 Cards.sync().then(() => {
   console.log('Cards table created');

@@ -14,13 +14,13 @@ const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-
-app.get('/cards', Cards.getCards);
-app.post('/Cards*', Cards.saveCard);
-app.put('/cards', Cards.favorite);
-app.delete('/cards', Cards.removeCard);
+app.get('/Cards/:user_id', Cards.getCards);
+app.post('/Cards/:user_id', Cards.saveCard);
+app.put('/Cards/:user_id', Cards.favorite);
+app.delete('/Cards/:user_id', Cards.removeCard);
 
 app.get('/user/:username/:password', Users.verifyUser);
 app.post('/user', Users.saveUser);

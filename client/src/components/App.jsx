@@ -9,7 +9,7 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       finding: true,
-      currentUser: ''
+      currentUser: 0
     };
     this.validateUser = this.validateUser.bind(this);
     this.createUser = this.createUser.bind(this);
@@ -20,7 +20,11 @@ class App extends React.Component {
     axios.get(`/user/${user}/${pass}`)
       .then((res) => {
         console.log(res);
-        this.setState({loggedIn: true, currentUser: user});
+        if (res.data === 0) {
+          alert('REQUEST COMPLETE: INVALID USERNAME AND PASSWORD');
+        } else {
+          this.setState({loggedIn: true, currentUser: res.data});
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -36,7 +40,7 @@ class App extends React.Component {
           alert(res.data.errors[0].message.toUpperCase());
         } else {
           console.log('Account Successfully Created', res);
-          this.setState({loggedIn: true, currentUser: user.toUpperCase()});
+          this.setState({loggedIn: true, currentUser: res.data});
         }
       })
       .catch((err) => console.log(err, 'INVALID USERNAME OR PASSWORD'));
@@ -52,7 +56,7 @@ class App extends React.Component {
           <div id='banner'>
             <h3 id='subtitle'>Explore the Realm <br></br> Grow your Collection</h3>
           </div>
-          {this.state.loggedIn ? <Finder /> : <Login create={this.createUser} login={this.validateUser} />}
+          {this.state.loggedIn ? <Finder user={this.state.currentUser}/> : <Login create={this.createUser} login={this.validateUser} />}
         </div>
       </>
     );

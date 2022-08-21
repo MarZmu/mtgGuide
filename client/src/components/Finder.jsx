@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
+import { PropTypes } from 'prop-types';
 
-function Finder() {
+function Finder({user}) {
 
   const costs = ['Select', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const colors = ['Select', 'White', 'Blue', 'Black', 'Red', 'Green'];
@@ -37,8 +38,8 @@ function Finder() {
         endpoint.push(`${key}=${val}`);
       }
     });
-    // endpoint = url + endpoint.join('&');
-    endpoint = endpoint.join('&');
+    endpoint = url + endpoint.join('&');
+    // endpoint = endpoint.join('&');
     getCards(endpoint);
   };
 
@@ -50,23 +51,24 @@ function Finder() {
 
   //takes endpoint from buildUrl, fetches cards and puts top 9 in state
   const getCards = (endpoint) => {
-    // axios.get(endpoint)
-    axios.get(`/Cards?${endpoint}`)
-      .then((res) => console.log(res));
-      // .then(({ data }) => {
-      //   data = (order ? orderCards(data.cards) : data.cards);
-      //   // data = data.cards.sort((a, b) => (a.order > b.order));
-      //   // console.log(data.sort((a, b) => a.order < b.order));
-      //   setCards(data.slice(0, 9));
-      // });
+    axios.get(endpoint)
+    // axios.get(`/Cards?${endpoint}`)
+      // .then((res) => console.log(res));
+      .then(({ data }) => {
+        data = (order ? orderCards(data.cards) : data.cards);
+        // data = data.cards.sort((a, b) => (a.order > b.order));
+        // console.log(data.sort((a, b) => a.order < b.order));
+        setCards(data.slice(0, 9));
+      });
   };
+
 
 
   //confirms user wants to add card to database
   const addCardPrompt = (card) => {
-    const addCard = confirm('Add this card to your collection?');
+    const addCard = confirm(` ${user}. Add this card to your collection?`);
     if (addCard) {
-      axios.post('/cards', {card} );
+      axios.post(`/Cards/${user}`, {card});
     }
   };
 
@@ -128,7 +130,7 @@ function Finder() {
           id={'cd' + index}
           src={card.imageUrl}
           alt={card.name}
-          onClick={(e) => addCardPrompt(displayCard)}
+          onClick={(e) => addCardPrompt(card)}
           onMouseEnter={(e) => setDisplayCard(card)}>
         </img>)
         )}
@@ -138,3 +140,8 @@ function Finder() {
 }
 
 export default Finder;
+
+
+Finder.propTypes = {
+  user: PropTypes.number
+};

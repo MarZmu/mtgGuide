@@ -4,15 +4,15 @@ module.exports.Users = {
 
   verifyUser: (req, res) => {
 
-    const user = req.query.username;
-    const pass = req.query.password;
+    const user = req.params.username;
+    const pass = req.params.password;
 
     console.log('un and pass', user, pass);
 
-    Users.findOne({ where: {username: user, password: pass } })
-      .then((res) => {
-        console.log(res);
-        res.sendStatus(200).json(1);
+    Users.findOne({ where: {username: user.toUpperCase(), password: pass } })
+      .then(({dataValues}) => {
+        console.log(dataValues);
+        res.json(dataValues.id);
       })
       .catch((err) => {
         console.log(err);
@@ -30,9 +30,9 @@ module.exports.Users = {
 
     Users.create({username: user, password: pass})
     // newUser.save()
-      .then((res) => {
-        console.log(res.dataValues.id);
-        res.sendStatus(201).end(res.dataValues.id);
+      .then(({dataValues}) => {
+        console.log(dataValues.id);
+        res.json(dataValues.id);
       })
       .catch((err) => res.json(err));
   }
