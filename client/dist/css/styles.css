@@ -117,7 +117,8 @@ select {
 #api, #local {
   width: 25%;
   position: relative;
-  left: 38%;
+  margin: 5px;
+  left: 23%;
   background-color: rgb(46, 44, 44);
   color: rgb(223, 228, 232);
 }

@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get('/Cards/:user_id', Cards.getCards);
 app.post('/Cards/:user_id', Cards.saveCard);
 app.put('/Cards/:user_id', Cards.favorite);
-app.delete('/Cards/:user_id', Cards.removeCard);
+app.delete('/Cards/:user_id/:card_id', Cards.removeCard);
 
 app.get('/user/:username/:password', Users.verifyUser);
 app.post('/user', Users.saveUser);

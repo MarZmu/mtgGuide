@@ -42,8 +42,8 @@ const Cards = sequelize.define('Cards', {
   rarity: { type: Sequelize.STRING, allowNull: false },
   text: { type: Sequelize.STRING, allowNull: false, unique: false },
   flavor: { type: Sequelize.STRING, allowNull: false, unique: false },
-  // power: { type: Sequelize.INTEGER, default: 0 },
-  // toughness: { type: Sequelize.INTEGER, default: 0},
+  power: { type: Sequelize.INTEGER, default: 0 },
+  toughness: { type: Sequelize.INTEGER, default: 0},
   imageUrl: { type: Sequelize.STRING, unique: true, allowNull: false }
 }, { timestamps: false });
 
@@ -54,9 +54,9 @@ Cards.sync().then(() => {
 });
 
 const UserCards = sequelize.define('UserCards', {
-  // user_id: { type: Sequelize.INTEGER, unique: false, allowNull: false, foriegnKey: true },
-  // card_id: { type: Sequelize.INTEGER, unique: false, allowNull: false, foriegnKey: true },
-  fav_card: { type: Sequelize.BOOLEAN, unique: false, default: false, allowNull: false}
+  userid: { type: Sequelize.INTEGER, unique: false, allowNull: false, foriegnKey: true },
+  cardid: { type: Sequelize.INTEGER, unique: false, allowNull: false, foriegnKey: true },
+  favcard: { type: Sequelize.BOOLEAN, unique: false, default: false, allowNull: false}
 }
 );
 
@@ -66,12 +66,13 @@ UserCards.sync().then(() => {
   console.log('Error making UC Table', err);
 });
 
-Users.belongsToMany(Cards, { through: UserCards, foriegnKey: 'user_id', otherKey: 'card_id' });
-Cards.belongsToMany(Users, { through: UserCards, foriegnKey: 'card_id', otherKey: 'user_id' });
+// Users.belongsToMany(Cards, { through: UserCards, foriegnKey: 'userid', otherKey: 'cardid' });
+// Cards.belongsToMany(Users, { through: UserCards, foriegnKey: 'cardid', otherKey: 'userid' });
 
 
 module.exports.Users = Users;
 module.exports.Cards = Cards;
+module.exports.UserCards = UserCards;
 module.exports.sequelize = sequelize;
 
 /*

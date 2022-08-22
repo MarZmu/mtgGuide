@@ -9,25 +9,26 @@ function Finder({user}) {
   const costs = ['Select', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const colors = ['Select', 'White', 'Blue', 'Black', 'Red', 'Green'];
   const types = ['Select', 'Creature', 'Enchantment', 'Instant', 'Planeswalker', 'Tribal', 'Instant', 'Artifact'];
-  const sorts = ['Select', 'Toughness', 'Mana Cost', 'Newest', 'Rarity'];
+  const sorts = ['Select', 'Toughness', 'Power', 'Mana Cost', 'Newest', 'Rarity'];
   const filters = {'colors': 'Select', 'type': 'Select', 'cmc': 'Select', 'name': ''};
+  const orderKeys = { 'Mana Cost': 'cmc', 'Power': 'power', 'Toughness': 'toughnes', 'Newest': 'createdAt'};
 
-  const [cards, setCards] = useState([]);
+  var [cards, setCards] = useState([]);
   const [order, setOrder] = useState('');
   const [displayCard, setDisplayCard] = useState();
   const [local, setLocal] = useState(false);
 
   useEffect(
     () => {
-      setCards(orderCards(cards)); 
+      setCards(orderCards(cards));
     },
-    [order],
+    []
   );
 
   var url = 'https://api.magicthegathering.io/v1/cards/?contains=imageUrl&';
 
   //throttle / debounce searchbar
-  
+
   //puts selected filters in state
   const onChange = (e) => {
     const key = e.target.id;
@@ -40,6 +41,7 @@ function Finder({user}) {
 
   //creates endpoint from set filters
   const buildUrl = (e) => {
+    setDisplayCard(null);
     var endpoint = [];
     _.each(filters, (val, key) => {
       if (val !== 'Select' && val !== '') {
@@ -52,29 +54,38 @@ function Finder({user}) {
       getCards(endpoint, null);
     } else {
       setLocal(true);
-      endpoint.join('&');
+      endpoint = endpoint.join('&');
+      console.log('local', endpoint);
       getCards(null, endpoint);
     }
   };
 
   //takes endpoint from buildUrl, fetches cards and puts top 9 in state
-  const getCards = (api, local) => {
+  const getCards = (api, localep) => {
     if (api) {
+      console.log(api);
       axios.get(api)
-      .then(({ data }) => {
-        setCards(data.slice(0, 50));
-      });
+        .then(({ data }) => {
+          console.log(data);
+          setCards(data.cards.slice(0, 50));
+        });
     } else {
-      axios.get(`/Cards?${local}`)
+      console.log(user, localep);
+      axios.get(`/Cards/${user}/?${localep}`)
         .then(({data}) => {
+          data.map((card) => card.createdAt = new Date(card.createdAt));
+          console.log(data[0]);
           setCards(data.slice(0, 50));
-        })
+        });
     }
   };
 
-  const orderCards = (cards) => {
+  const orderCards = (criteria) => {
+    setOrder(criteria);
     console.log(order, cards);
-    cards = cards.sort((a, b) => (a[order] - b[order]));
+    const how = orderKeys[criteria];
+    console.log(how);
+    cards = cards.sort((a, b) => (a[how] - b[how]));
     return cards;
   };
 
@@ -84,6 +95,14 @@ function Finder({user}) {
     const addCard = confirm(` ${user}. Add this card to your collection?`);
     if (addCard) {
       axios.post(`/Cards/${user}`, {card});
+    }
+  };
+
+  const favorite = (card) => {
+    const removeCard = confirm(` ${user}. Remove this card from your collection?`);
+    console.log(card);
+    if (removeCard) {
+      axios.delete(`/Cards/${user}/${card.cardid}`);
     }
   };
 
@@ -127,7 +146,7 @@ function Finder({user}) {
           <select
             id='order'
             name='order'
-            onChange={(e) => setOrder(e.target.value)}>
+            onChange={(e) => orderCards(e.target.value)}>
             {sorts.map((sort, index) => <option key={'s' + index} value={sort}>{sort}</option>)}
           </select>
         </label>
@@ -142,11 +161,11 @@ function Finder({user}) {
         {/* Future: render a star on cards already owned in DB  */}
         {cards.slice(0, 10).map((card, index) => (<img
           key={card.id}
-          className='card'
+          className={local ? 'lcard' : 'card'}
           id={'cd' + index}
           src={card.imageUrl}
           alt={card.name}
-          onClick={ (e) => addCardPrompt(card)}
+          onClick={ local ? (e) => favorite(card) : (e) => addCardPrompt(card)}
           onMouseEnter={(e) => setDisplayCard(card)}>
         </img>)
         )}

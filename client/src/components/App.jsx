@@ -7,9 +7,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      loggedIn: true,
       finding: true,
-      currentUser: 0
+      currentUser: 5
     };
     this.validateUser = this.validateUser.bind(this);
     this.createUser = this.createUser.bind(this);
