@@ -45,7 +45,7 @@ const Cards = sequelize.define('Cards', {
   // power: { type: Sequelize.INTEGER, default: 0 },
   // toughness: { type: Sequelize.INTEGER, default: 0},
   imageUrl: { type: Sequelize.STRING, unique: true, allowNull: false }
-});
+}, { timestamps: false });
 
 Cards.sync().then(() => {
   console.log('Cards table created');

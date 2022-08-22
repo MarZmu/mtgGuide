@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import { PropTypes } from 'prop-types';
@@ -15,11 +15,19 @@ function Finder({user}) {
   const [cards, setCards] = useState([]);
   const [order, setOrder] = useState('');
   const [displayCard, setDisplayCard] = useState();
+  const [local, setLocal] = useState(false);
+
+  useEffect(
+    () => {
+      setCards(orderCards(cards)); 
+    },
+    [order],
+  );
 
   var url = 'https://api.magicthegathering.io/v1/cards/?contains=imageUrl&';
 
   //throttle / debounce searchbar
-
+  
   //puts selected filters in state
   const onChange = (e) => {
     const key = e.target.id;
@@ -31,16 +39,37 @@ function Finder({user}) {
   };
 
   //creates endpoint from set filters
-  const buildUrl = () => {
+  const buildUrl = (e) => {
     var endpoint = [];
     _.each(filters, (val, key) => {
       if (val !== 'Select' && val !== '') {
         endpoint.push(`${key}=${val}`);
       }
     });
-    endpoint = url + endpoint.join('&');
-    // endpoint = endpoint.join('&');
-    getCards(endpoint);
+    if (e.target.id === 'api') {
+      setLocal(false);
+      endpoint = url + endpoint.join('&');
+      getCards(endpoint, null);
+    } else {
+      setLocal(true);
+      endpoint.join('&');
+      getCards(null, endpoint);
+    }
+  };
+
+  //takes endpoint from buildUrl, fetches cards and puts top 9 in state
+  const getCards = (api, local) => {
+    if (api) {
+      axios.get(api)
+      .then(({ data }) => {
+        setCards(data.slice(0, 50));
+      });
+    } else {
+      axios.get(`/Cards?${local}`)
+        .then(({data}) => {
+          setCards(data.slice(0, 50));
+        })
+    }
   };
 
   const orderCards = (cards) => {
@@ -48,20 +77,6 @@ function Finder({user}) {
     cards = cards.sort((a, b) => (a[order] - b[order]));
     return cards;
   };
-
-  //takes endpoint from buildUrl, fetches cards and puts top 9 in state
-  const getCards = (endpoint) => {
-    axios.get(endpoint)
-    // axios.get(`/Cards?${endpoint}`)
-      // .then((res) => console.log(res));
-      .then(({ data }) => {
-        data = (order ? orderCards(data.cards) : data.cards);
-        // data = data.cards.sort((a, b) => (a.order > b.order));
-        // console.log(data.sort((a, b) => a.order < b.order));
-        setCards(data.slice(0, 9));
-      });
-  };
-
 
 
   //confirms user wants to add card to database
@@ -117,20 +132,21 @@ function Finder({user}) {
           </select>
         </label>
       </div>
-      <button id='search-button' onClick={buildUrl}>Search Cards</button>
+      <button id='local' onClick={(e) => buildUrl(e)}>Search My Cards</button>
+      <button id='api' onClick={(e) => buildUrl(e)}>Search Online</button>
       <div id='card-container'>
         {displayCard && <img
           id='display-card'
           src={displayCard.imageUrl}
           alt={displayCard.name}></img>}
         {/* Future: render a star on cards already owned in DB  */}
-        {cards.map((card, index) => (<img
+        {cards.slice(0, 10).map((card, index) => (<img
           key={card.id}
           className='card'
           id={'cd' + index}
           src={card.imageUrl}
           alt={card.name}
-          onClick={(e) => addCardPrompt(card)}
+          onClick={ (e) => addCardPrompt(card)}
           onMouseEnter={(e) => setDisplayCard(card)}>
         </img>)
         )}

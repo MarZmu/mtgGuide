@@ -114,7 +114,7 @@ select {
   background-color: rgb(255 251 246);
 }
 
-#search-button {
+#api, #local {
   width: 25%;
   position: relative;
   left: 38%;
